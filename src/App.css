@@ -6,6 +6,89 @@
   z-index: 100;
   transition: all 250ms linear;
 }
+.modal-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* PostThoughtsPage.css */
+.white-text {
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input, textarea, select, button {
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+
+.modal-content {
+  width: 80%;
+  max-width: 1200px; /* Adjust based on your design */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.editor-wrapper {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  min-height: 200px;
+  background-color: #fff;
+  color: #000;
+}
+
+.ProseMirror {
+  outline: none;
+  white-space: pre-wrap;
+}
+
+.btn {
+  background: #222;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.active-btn {
+  background: #3b82f6;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
 
 .logo img {
   height: 30px;

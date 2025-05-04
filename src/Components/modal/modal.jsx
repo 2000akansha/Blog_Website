@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BASE_URL } from "../../config";
+import RichTextEditor from "../../Components/editor/editor"; // adjust path if needed
 
 function PostThoughtModal({ open, onClose, categories }) {
   const [formData, setFormData] = useState({
@@ -137,7 +138,12 @@ function PostThoughtModal({ open, onClose, categories }) {
             className="w-full p-2 rounded bg-transparent text-white placeholder-white/70 border border-white/30"
             onChange={handleChange}
           />
-
+          {/* <RichTextEditor
+            value={formData.content}
+            onChange={(newContent) =>
+              setFormData((prev) => ({ ...prev, content: newContent }))
+            }
+          /> */}
           <input
             type="file"
             name="attachement"

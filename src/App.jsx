@@ -1,28 +1,12 @@
 import React, { useEffect, useState } from "react"; // Import React and necessary hooks
-import { BrowserRouter as Router, Link } from "react-router-dom"; // Import Router and Link from react-router
-import { Divider } from "@mui/material"; // Import Divider from Material-UI
+import { BrowserRouter as Router, useLocation } from "react-router-dom"; // Import Router and useLocation
+// import { Divider } from "@mui/material"; // Import Divider from Material-UI
 import AppRoutes from "./Routes/AppRoutes"; // Import AppRoutes
 import { BASE_URL } from "./config"; // Import your API base URL config
-import PostThoughtModal from "./Components/modal/modal"; // Import the PostThoughtModal component
+import Header from "./components/header/Header"; // Import the Header component
 
 function App() {
   const [categories, setCategories] = useState([]); // State to store categories
-  const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
-
-  // Function to handle opening the LinkedIn profile
-  const handleGetInTouchClick = () => {
-    window.open("https://www.linkedin.com/in/majamal/", "_blank"); // Open LinkedIn profile
-  };
-
-  // Function to open the modal
-  const openModal = () => {
-    setModalOpen(true); // Set modal to open
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setModalOpen(false); // Set modal to close
-  };
 
   // Fetch categories when the component is mounted
   useEffect(() => {
@@ -44,49 +28,36 @@ function App() {
   }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#020213] to-[#091C38]"> {/* Full screen background gradient */}
-      <Router>
-        <header>
-          <div className="container mx-auto text-center py-8"> {/* Header container */}
-            <h1 className="text-3xl sm:text-4xl font-semibold text-white">Photon</h1> {/* Main title */}
-            {/* Navigation */}
-            <div className="flex justify-between items-center mt-6 text-white">
-              <div className="flex items-center space-x-4">
-                <Link to="/about">
-                  <button className="text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300">
-                    About
-                  </button>
-                </Link>
+    <Router> {/* Ensure that the Router wraps the entire app */}
+      <AppContent categories={categories} /> {/* Pass the categories as a prop to the AppContent component */}
+    </Router>
+  );
+}
 
-                {/* Dynamic Categories */}
-                {categories.map((cat) => (
-                  <Link to={`/category/${cat._id}`} key={cat._id}>
-                    <div className="flex items-center space-x-1 hover:underline cursor-pointer">
-                      <span className="text-sm text-white">{cat.categoryName?.trim()}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+function AppContent({ categories }) {
+  const location = useLocation(); // Get the current location (route)
 
-              {/* Post Your Thoughts Button */}
-              <button
-                className="text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
-                onClick={openModal} // Open the modal when clicked
-              >
-                Post Your Thoughts 💭
-              </button>
-            </div>
-          </div>
-        </header>
+  // Check if we are on the "Post Your Thoughts" page
+  const isPostThoughtsPage = location.pathname === "/post-thoughts";
 
-        <Divider sx={{ backgroundColor: "#fff", margin: "20px auto", width: "80%" }} /> {/* Divider for separating sections */}
+  return (
+    <div className={`min-h-screen ${isPostThoughtsPage ? 'bg-gradient-to-r from-[#020213] to-[#091C38]' : ''}`}>
+      {/* Only show header if not on the Post Your Thoughts page */}
+      {!isPostThoughtsPage && <Header categories={categories} />}
 
-        <main className="py-8">
-          <div className="container mx-auto">
-            <AppRoutes /> {/* Route handling */}
-          </div>
-        </main>
+      {/* Only show divider if not on the Post Your Thoughts page */}
+      {/* {!isPostThoughtsPage && (
+        <Divider sx={{ backgroundColor: "#fff", margin: "20px auto", width: "80%" }} />
+      )} */}
 
+      <main className={`${isPostThoughtsPage ? 'bg-cover bg-center' : ''} py-8`}>
+        <div className="container mx-auto">
+          <AppRoutes /> {/* Route handling */}
+        </div>
+      </main>
+
+      {/* Only show footer if not on the Post Your Thoughts page */}
+      {!isPostThoughtsPage && (
         <footer className="bg-gradient-to-r from-[#020213] to-[#091C38] text-white py-6">
           <div className="container mx-auto">
             <p className="text-center text-sm">
@@ -94,14 +65,7 @@ function App() {
             </p>
           </div>
         </footer>
-
-        {/* Post Thought Modal */}
-        <PostThoughtModal 
-          open={modalOpen}  // Control modal visibility
-          onClose={closeModal} // Function to close the modal
-          categories={categories} // Passing categories to modal as a prop
-        />
-      </Router>
+      )}
     </div>
   );
 }

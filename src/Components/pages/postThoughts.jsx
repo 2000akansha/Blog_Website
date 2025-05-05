@@ -473,6 +473,8 @@ const PostThoughtsPage = () => {
                             : "bg-indigo-600 hover:bg-indigo-700"
                             }`}
                     >
+
+                        
                         {loading ? <ClipLoader size={20} color="#fff" /> : " Post "}
                     </button>
                 </div>
